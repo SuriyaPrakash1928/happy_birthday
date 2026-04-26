@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to the Magic 🎉</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #ff4081;
+      --accent: #7c4dff;
+      --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-gradient);
+      overflow: hidden;
+    }
+
+    /* ☁️ Floating background shapes */
+    .shape {
+      position: absolute;
+      filter: blur(50px);
+      z-index: 0;
+      border-radius: 50%;
+    }
+
+    .shape-1 {
+      width: 300px;
+      height: 300px;
+      background: #ff80ab;
+      top: -10%;
+      left: -10%;
+    }
+
+    .shape-2 {
+      width: 250px;
+      height: 250px;
+      background: #b39ddb;
+      bottom: -5%;
+      right: -5%;
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes cardAppear {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-family: "Dancing Script", cursive;
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-left: 15px;
+      margin-bottom: 5px;
+      font-size: 0.8rem;
+      color: #888;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 50px;
+      border: 2px solid #eee;
+      outline: none;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.4s;
+      margin-top: 10px;
+      box-shadow: 0 10px 20px rgba(255, 64, 129, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(255, 64, 129, 0.4);
+    }
+
+    /* 🚫 Shake animation for errors */
+    .shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-10px);
+      }
+
+      75% {
+        transform: translateX(10px);
+      }
+    }
+
+    #error-msg {
+      margin-top: 15px;
+      color: #d32f2f;
+      font-size: 0.85rem;
+      min-height: 20px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .heart {
+      position: absolute;
+      color: var(--primary);
+      pointer-events: none;
+      animation: floatHeart 4s linear forwards;
+    }
+
+    @keyframes floatHeart {
+      to {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+
+  <div class="login-card" id="card">
+    <h1>Hello Birthday Girl✨</h1>
+    <p>Something is waiting for you...</p>
+
+    <div class="input-group">
+      <label>Username</label>
+      <input type="text" id="username" placeholder="Who are you?" />
+    </div>
+
+    <div class="input-group">
+      <label>The Secret Password</label>
+      <input type="password" id="password" placeholder="Hint: Something sweet" />
+    </div>
+
+    <button class="btn" onclick="handleLogin()">Unlock Happiness 🎉</button>
+
+    <div id="error-msg"></div>
+  </div>
+
+  <script>
+    // --- CONFIGURATION (The hardcoded login) ---
+    const VALID_USER = "logeswari123@gmail.com"; // Update this
+    const VALID_PASS = "Birthday@2026"; // Update this
+
+    const errorMessages = [
+      "Nice try! But is that really you? 🤔",
+      "Access Denied! Try giving the computer a cookie first 🍪",
+      "Incorrect! My sensors suggest you might be a cute imposter 🕵️‍♀️",
+      "Wait, that's not it! Did you forget? (I won't tell anyone) 🤫",
+      "Wrong password! But your hair looks great today anyway ✨",
+    ];
+
+    function handleLogin() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const card = document.getElementById("card");
+      const errorDisplay = document.getElementById("error-msg");
+
+      if (user === VALID_USER && pass === VALID_PASS) {
+        // SUCCESS
+        errorDisplay.style.display = "none";
+        createHearts();
+
+        // Redirect after a small delay to show hearts
+        setTimeout(() => {
+          window.location.href = "celebrate.html";
+        }, 1500);
+      } else {
+        // FAILURE
+        card.classList.add("shake");
+        errorDisplay.style.display = "block";
+        errorDisplay.innerText =
+          errorMessages[Math.floor(Math.random() * errorMessages.length)];
+
+        setTimeout(() => {
+          card.classList.remove("shake");
+        }, 400);
+      }
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.innerHTML = "💖";
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.bottom = "-5vh";
+          heart.style.fontSize = Math.random() * 20 + 10 + "px";
+          document.body.appendChild(heart);
+        }, i * 50);
+      }
+    }
+  </script>
+</body>
+
+</html>
